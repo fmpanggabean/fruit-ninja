@@ -28,7 +28,11 @@ namespace FruitNinja.Gameplay
     
         public T RequestInactiveObject<T>() {
             foreach(GameObject go in pool) {
+                if (go.activeInHierarchy == true) {
+                    continue;
+                }
                 if (go.GetComponent<T>() != null) {
+                    Activate(go);
                     return go.GetComponent<T>();
                 }
             }
@@ -39,7 +43,11 @@ namespace FruitNinja.Gameplay
             List<T> list = new List<T>();
 
             foreach(GameObject go in pool) {
+                if (go.activeInHierarchy == true) {
+                    continue;
+                }
                 if (go.GetComponent<T>() != null) {
+                    Activate(go);
                     list.Add(go.GetComponent<T>());
                 }
             }
@@ -47,5 +55,11 @@ namespace FruitNinja.Gameplay
             return list;
         }
 
+        private void Activate(GameObject go) {
+            go.SetActive(true);
+        }
+        private void Deactivate(GameObject go) {
+            go.SetActive(false);
+        }
     }
 }
