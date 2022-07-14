@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace FruitNinja.Gameplay
 {
+    public enum PoolRequestMode {
+        OBJECT_ONLY, WITH_ACTIVATION
+    }
     public class ObjectPool : MonoBehaviour
     {
         [SerializeField] private List<GameObject> prefabs;
@@ -26,20 +29,22 @@ namespace FruitNinja.Gameplay
             }
         }
     
-        public T RequestInactiveObject<T>() {
+        public T RequestInactiveObject<T>(PoolRequestMode mode) {
             foreach(GameObject go in pool) {
                 if (go.activeInHierarchy == true) {
                     continue;
                 }
                 if (go.GetComponent<T>() != null) {
-                    Activate(go);
+                    if (mode == PoolRequestMode.WITH_ACTIVATION) {
+                        Activate(go);
+                    }
                     return go.GetComponent<T>();
                 }
             }
             return default(T);
         }
 
-        public List<T> RequestInactiveObjects<T>() {
+        public List<T> RequestInactiveObjects<T>(PoolRequestMode mode) {
             List<T> list = new List<T>();
 
             foreach(GameObject go in pool) {
@@ -47,7 +52,9 @@ namespace FruitNinja.Gameplay
                     continue;
                 }
                 if (go.GetComponent<T>() != null) {
-                    Activate(go);
+                    if (mode == PoolRequestMode.WITH_ACTIVATION) {
+                        Activate(go);
+                    }
                     list.Add(go.GetComponent<T>());
                 }
             }

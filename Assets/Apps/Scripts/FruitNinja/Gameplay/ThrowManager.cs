@@ -10,13 +10,25 @@ namespace FruitNinja.Gameplay
         [SerializeField] private ObjectPool pool;
         [Range(1, 30)] public float throwPower;
         public WeightTable throwData;
+        public Boundary boundary;
 
-        private List<ThrowableObject> thrownObjects;
+        [SerializeField] private List<ThrowableObject> thrownObjects;
 
 
         private void Awake() {
             thrownObjects = new List<ThrowableObject>();
+            
+            if (boundary == null) {
+                boundary = FindObjectOfType<Boundary>();
+            }
+            boundary.OnOutOfBoundary += RemoveFromList;
         }
+        private void Update() {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                ThrowRandom();
+            }
+        }
+
         public void ThrowRandom() {
             Throw(throwData.GetRandomedData());
         }
@@ -24,14 +36,17 @@ namespace FruitNinja.Gameplay
             ThrowableObject to;
             
             if (label == "Bomb") {
-                to = pool.RequestInactiveObject<Bomb>();
+                to = pool.RequestInactiveObject<Bomb>(PoolRequestMode.WITH_ACTIVATION);
             } else {
-                to = pool.RequestInactiveObject<Fruit>();
+                to = pool.RequestInactiveObject<Fruit>(PoolRequestMode.WITH_ACTIVATION);
             }
             to.Init(transform);
             to.Throw(throwPower);
 
             thrownObjects.Add(to);
+        }
+        public void RemoveFromList(GameObject go) {
+            thrownObjects.Remove(go.GetComponent<ThrowableObject>());
         }
     }
 }

@@ -1,9 +1,13 @@
-﻿namespace FruitNinja.Gameplay {
+﻿using UnityEngine;
+
+namespace FruitNinja.Gameplay {
     public class SliceInfo {
-        private ThrowableObject throwableObject;
+        public Transform slicedTransform { get; private set; }
+        public Rigidbody rigidBody { get; private set; }
 
         public SliceInfo(ThrowableObject throwableObject) {
-            this.throwableObject = throwableObject;
+            slicedTransform = throwableObject.transform;
+            rigidBody = throwableObject.GetComponent<Rigidbody>();
         }
     }
 }
