@@ -1,0 +1,16 @@
+{
+    "name": "FruitNinja.Gameplay",
+    "rootNamespace": "FruitNinja.Gameplay",
+    "references": [
+        "GUID:201440b1c2a04f64da3be2b9f043ed41"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
