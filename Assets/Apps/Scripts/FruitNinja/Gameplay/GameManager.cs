@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace FruitNinja.Gameplay
 {
@@ -13,6 +14,7 @@ namespace FruitNinja.Gameplay
         public event Action<int> OnScoreUpdated;
         public event Action<int> OnMissUpdated;
         public event Action OnGameOver;
+        public event Action OnPaused;
 
         public int score;
         public int miss;
@@ -81,8 +83,18 @@ namespace FruitNinja.Gameplay
             OnGameOver?.Invoke();
         }
 
+        public void PauseGame() {
+            Time.timeScale = 0;
+        }
+        public void ResumeGame() {
+            Time.timeScale = 1;
+        }
+
         private int GetRandomThrowCount(int v1, int v2) {
             return UnityEngine.Random.Range(v1, v2);
+        }
+        public void ReturnToMainMenu() {
+            SceneManager.LoadScene(0);
         }
     }
 }

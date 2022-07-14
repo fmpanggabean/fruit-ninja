@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 26ec3c35b6a21b14e9f9b0b3af10641f, type: 3}
-  m_Name: New Throw Data
+  m_Name: Object Spawn Weight
   m_EditorClassIdentifier: 
   weightTable:
   - label: Fruit
     weight: 7
   - label: Bomb
-    weight: 3
+    weight: 2
