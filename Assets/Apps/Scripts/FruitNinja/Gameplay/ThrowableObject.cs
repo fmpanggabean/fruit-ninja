@@ -6,7 +6,9 @@ namespace FruitNinja.Gameplay
     {
         protected Rigidbody rigidbody;
 
-        public event System.Action<SliceInfo> OnSliced;
+        public event System.Action<SliceInfo> OnSliced_SliceInfo;
+        public event System.Action<GameObject> OnSliced_GameObject;
+        public event System.Action<ThrowableObject> OnSliced_Throwable;
 
         private void Awake() {
             rigidbody = GetComponent<Rigidbody>();
@@ -14,18 +16,6 @@ namespace FruitNinja.Gameplay
         private void Update() {
             ClickHandler();
         }
-        private void OnEnable() {
-            OnSliced += Sliced;
-        }
-
-        private void OnDisable() {
-            OnSliced -= Sliced;
-        }
-
-        private void Sliced(SliceInfo sliceInfo) {
-            Hide();
-        }
-
         private void ClickHandler() {
             if (Input.GetMouseButton(0)) {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -33,7 +23,9 @@ namespace FruitNinja.Gameplay
 
                 if (Physics.Raycast(ray, out hit, 100)) {
                     if (hit.transform == transform) {
-                        OnSliced?.Invoke(new SliceInfo(this));
+                        OnSliced_SliceInfo?.Invoke(new SliceInfo(this));
+                        OnSliced_GameObject?.Invoke(hit.transform.gameObject);
+                        OnSliced_Throwable?.Invoke(this);
                     }
                 }
             }

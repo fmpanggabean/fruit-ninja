@@ -23,12 +23,20 @@ namespace FruitNinja.Gameplay
             }
             boundary.OnOutOfBoundary += RemoveFromList;
         }
-        private void Update() {
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                ThrowRandom();
+
+        public void SetOnOutOfBoundaryAction(Action<GameObject> action) {
+            boundary.OnOutOfBoundary += action;
+        }
+        public void SetOnSliceAction(Action<ThrowableObject> action) {
+            foreach (ThrowableObject to in pool.RequestInactiveObjects<ThrowableObject>(PoolRequestMode.OBJECT_ONLY)) {
+                to.OnSliced_Throwable += action;
             }
         }
-
+        public void SetOnSliceAction() {
+            foreach(ThrowableObject to in pool.RequestInactiveObjects<ThrowableObject>(PoolRequestMode.OBJECT_ONLY)) {
+                to.OnSliced_Throwable += RemoveFromList;
+            }
+        }
         public void ThrowRandom() {
             Throw(throwData.GetRandomedData());
         }
@@ -46,7 +54,30 @@ namespace FruitNinja.Gameplay
             thrownObjects.Add(to);
         }
         public void RemoveFromList(GameObject go) {
-            thrownObjects.Remove(go.GetComponent<ThrowableObject>());
+            ThrowableObject to = go.GetComponent<ThrowableObject>();
+
+            if (to == null) {
+                return;
+            }
+            RemoveFromList(to);
+        }
+        public void RemoveFromList(ThrowableObject to) {
+            thrownObjects.Remove(to);
+            to.Hide();
+        }
+        private bool IsAnyActiveObject() {
+            if (thrownObjects.Count > 0) {
+                return true;
+            }
+            return false;
+        }
+        public IEnumerator WaitForAllObjects() {
+            while (true) {
+                if (!IsAnyActiveObject()) {
+                    break;
+                }
+                yield return null;
+            }
         }
     }
 }

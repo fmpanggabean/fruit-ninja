@@ -8,7 +8,7 @@ namespace FruitNinja.Gameplay
     public class SliceEffectManager : MonoBehaviour
     {
         public ObjectPool pool;
-        public List<SlicedEffect> slicedEffectColection;
+        public List<SlicedEffect> slicedEffectCollection;
         public Boundary boundary;
 
         private void Awake() {
@@ -22,26 +22,26 @@ namespace FruitNinja.Gameplay
         }
 
         private void Start() {
-            SliceActionRegister();
         }
 
         private void DeactivateEffect(GameObject go) {
             SlicedPiece sp = go.GetComponent<SlicedPiece>();
             if (sp != null) {
+                slicedEffectCollection.Remove(sp.GetSlicedEffect());
                 sp.Deactivate();
             }
         }
 
-        private void SliceActionRegister() {
+        public void SliceActionRegister() {
             foreach (Fruit f in pool.RequestInactiveObjects<Fruit>(PoolRequestMode.OBJECT_ONLY)) {
-                f.OnSliced += ShowEffect;
+                f.OnSliced_SliceInfo += ShowEffect;
             }
         }
 
         private void ShowEffect(SliceInfo info) {
             SlicedEffect se = pool.RequestInactiveObject<SlicedEffect>(PoolRequestMode.WITH_ACTIVATION);
             se.SetInfo(info);
-            slicedEffectColection.Add(se);
+            slicedEffectCollection.Add(se);
         }
     }
 }

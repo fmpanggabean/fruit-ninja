@@ -20,5 +20,9 @@ namespace FruitNinja.Gameplay {
         internal void Deactivate() {
             GetComponentInParent<SlicedEffect>().Deactivate();
         }
+
+        internal SlicedEffect GetSlicedEffect() {
+            return transform.parent.GetComponent<SlicedEffect>();
+        }
     }
 }

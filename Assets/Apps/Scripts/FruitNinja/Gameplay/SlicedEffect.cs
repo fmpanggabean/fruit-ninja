@@ -13,7 +13,6 @@ namespace FruitNinja.Gameplay
             transform.position = info.slicedTransform.position;
             transform.rotation = info.slicedTransform.rotation;
 
-            Debug.Log(info.rigidBody);
             slicedPiece[0].Set(info.slicedTransform, info.rigidBody);
             slicedPiece[1].Set(info.slicedTransform, info.rigidBody);
         }
