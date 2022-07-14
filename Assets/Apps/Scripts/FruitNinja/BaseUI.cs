@@ -1,4 +1,4 @@
-﻿namespace FruitNinja.Gameplay.UI {
+﻿namespace FruitNinja {
     public abstract class BaseUI : UnityEngine.MonoBehaviour{
 
         public void Hide() {

@@ -78,9 +78,17 @@ namespace FruitNinja.Gameplay
         }
 
         private void GameOver() {
-            Debug.Log("game over");
-            Time.timeScale = 0;
             OnGameOver?.Invoke();
+            CompareScore();
+        }
+
+        private void CompareScore() {
+            SaveData sd = SaveLoad.Load();
+
+            if (score > sd.highscore) {
+                sd.highscore = score;
+                SaveLoad.Save(sd);
+            }
         }
 
         public void PauseGame() {

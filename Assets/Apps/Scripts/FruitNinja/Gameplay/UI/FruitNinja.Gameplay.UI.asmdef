@@ -3,7 +3,8 @@
     "rootNamespace": "FruitNinja.Gameplay.UI",
     "references": [
         "GUID:aa2b5f2a2fa47e04ba0b3d45290c8e7a",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:201440b1c2a04f64da3be2b9f043ed41"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
