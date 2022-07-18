@@ -4,14 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace FruitNinja.Gameplay.UI {
-    public class PauseUI : BaseUI {
+    public class PauseUI : BaseUI, IGameUI {
         public Button pauseButton;
         public GameObject pauseScreen;
         public Button resumeButton;
 
+        public GameManager GameManager => FindObjectOfType<GameManager>();
+
         private void Awake() {
             pauseButton.onClick.AddListener(ShowPauseScreen);
             resumeButton.onClick.AddListener(HidePauseScreen);
+            SetPauseAction(GameManager.PauseGame);
+            SetResumeAction(GameManager.ResumeGame);
         }
         private void Start() {
             HidePauseScreen();

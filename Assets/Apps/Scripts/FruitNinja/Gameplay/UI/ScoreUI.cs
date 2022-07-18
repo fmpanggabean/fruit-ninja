@@ -5,10 +5,15 @@ using TMPro;
 
 namespace FruitNinja.Gameplay.UI
 {
-    public class ScoreUI : BaseUI
+    public class ScoreUI : BaseUI, IGameUI
     {
         public TMP_Text text;
 
+        public GameManager GameManager => FindObjectOfType<GameManager>();
+
+        private void Start() {
+            GameManager.OnScoreUpdated += SetScore;
+        }
         public void SetScore(int score) {
             text.text = score.ToString();
         }
